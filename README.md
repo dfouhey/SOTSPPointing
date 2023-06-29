@@ -12,6 +12,10 @@ Tamas I.  Gombosi. ApJS 264 49, 2023.
 Some of the pointing data, in particular for polar scans, is from an upcoming
 paper by Ruoyu Wang, Richard Higgins, David Fouhey, et al. (most of the above)
 
+
+The updated pointing data can be found at:
+(https://fouheylab.eecs.umich.edu/~fouhey/HinodeSOTSPLevel2Update.tgz)
+
 In order of likely utility, there are three scripts:
 
 ## minimalCorrect.py
@@ -21,6 +25,12 @@ the updated pointing should be at a particular date. The code has close to no
 dependencies and should work with nearly any version of python. If the pointing
 has a known correction (i.e., it was fit), that is used. Otherwise, it makes a 
 prediction that should be substantially better than the current pointing.
+
+For instance, here is the prediction at the time of writing:
+````
+> python minimalCorrect.py 20230608_232500
+20230608_232500 23.438624 61.849458
+```
 
 ## visualizePointingUpdate.py
 
