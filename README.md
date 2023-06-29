@@ -12,7 +12,7 @@ Some of the pointing data, in particular for polar scans, is from an upcoming
 paper by Ruoyu Wang, Richard Higgins, David Fouhey, et al. (most of the above)
 
 The updated pointing data can be found at:
-(https://fouheylab.eecs.umich.edu/~fouhey/HinodeSOTSPLevel2Update.tgz)
+https://fouheylab.eecs.umich.edu/~fouhey/HinodeSOTSPLevel2Update.tgz
 
 In order of likely utility, there are three scripts:
 
@@ -25,7 +25,7 @@ has a known correction (i.e., it was fit), that is used. Otherwise, it makes a
 prediction that should be substantially better than the current pointing.
 
 For instance, here is the prediction at the time of writing:
-````
+```
 > python minimalCorrect.py 20230608_232500
 20230608_232500 23.438624 61.849458
 ```
