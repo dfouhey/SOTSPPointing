@@ -1,17 +1,15 @@
 # SOTSPPointing
 Code for using/loading updated Hinode SOT-SP Pointing.
-David Fouhey
 
-Following: 
+Written by David Fouhey to accompany results from:
 
-``Large-Scale Spatial Cross-Calibration of Hinode/SOT-SP and
-SDO/HMI'' by David F. Fouhey, Richard E.L. Higgins, Spiro K. Antiochos, Graham
+``Large-Scale Spatial Cross-Calibration of Hinode/SOT-SP and SDO/HMI'' 
+by David F. Fouhey, Richard E.L. Higgins, Spiro K. Antiochos, Graham
 Barnes, Marc DeRosa, J. Todd Hoeksema, K.D. Leka, Yang Liu, Peter W. Schuck,
 Tamas I.  Gombosi. ApJS 264 49, 2023. 
 
 Some of the pointing data, in particular for polar scans, is from an upcoming
 paper by Ruoyu Wang, Richard Higgins, David Fouhey, et al. (most of the above)
-
 
 The updated pointing data can be found at:
 (https://fouheylab.eecs.umich.edu/~fouhey/HinodeSOTSPLevel2Update.tgz)
