@@ -9,11 +9,13 @@ Barnes, Marc DeRosa, J. Todd Hoeksema, K.D. Leka, Yang Liu, Peter W. Schuck,
 Tamas I.  Gombosi. ApJS 264 49, 2023. 
 
 Some of the pointing data, in particular for polar scans, is from an upcoming
-paper by Ruoyu Wang, Richard Higgins, David Fouhey, et al. (most of the above)
+paper by Ruoyu Wang, Richard Higgins, David Fouhey, et al. (the et al. being
+most of the above).
 
 This repository contains scripts that can work with and without an updated pointing
 information cache. This updated information can be found at:
-https://fouheylab.eecs.umich.edu/~fouhey/HinodeSOTSPLevel2Update.tgz
+https://fouheylab.eecs.umich.edu/~fouhey/HinodeSOTSPLevel2Update.tgz . The updated
+pointing table that is included in the repository is likely the most important
 
 There are three scripts in the repository. In order of likely usefulness, they
 are:
@@ -65,7 +67,7 @@ This is a csv file containing all pointing information. The first two lines are:
 
 ```
 datestr,XCENU,YCENU,XCENO,YCENO,DXCEN,DYCEN,totalTime,timeOfYear,timeOfDay,T_SPCCD,T_SPCEB
-20110101_065127,-598.687317,-385.336823,-619.500305,-391.698090,20.812988,6.361267,4.274841,0.000782,0.285729,-35.485500,-2.910680
+20061103_130310,-88.387131,-172.464481,-91.119888,-168.462860,2.732757,-4.001621,0.114015,0.839271,0.543866,-45.205000,-6.101200
 ```
 
 The columns are:

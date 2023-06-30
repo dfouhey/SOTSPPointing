@@ -252,7 +252,10 @@ if __name__ == "__main__":
     if "savetable" in todoList:
         with open("pointingTableSOTSP.txt","w") as fh:
             fh.write("datestr,XCENU,YCENU,XCENO,YCENO,DXCEN,DYCEN,totalTime,timeOfYear,timeOfDay,T_SPCCD,T_SPCEB\n")
-            for i in range(covariates.shape[0]):
+
+            order = list(range(len(covariates)))
+            order.sort(key=lambda i: dateStrs[i])
+            for i in order:
                 dxi, dyi = dx[i], dy[i] 
                 fh.write("%s,%f,%f,%f,%f,%f,%f," % ((dateStrs[i],)+tuple(pointing[i,:])+(dxi,dyi)))
                 fh.write("%f,%f,%f,%f,%f\n" % tuple(covariates[i,:]))
