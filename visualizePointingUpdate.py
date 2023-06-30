@@ -71,9 +71,9 @@ def denanify(X):
     return X
 
 if __name__ == "__main__":
-    srcUpdate = "/Pool3/users/fouhey/HinodeSOTSPLevel2UpdateFinal/Main/"
-    srcPrev = "SOTSPLevel2/"
-    srcHMI = "hmiSample/"
+    srcUpdate = "dataSample/update/"
+    srcPrev = "dataSample/original/"
+    srcHMI = "dataSample/HMI/"
     fn = "20160913_084504.fits"
 
     target = "alignmentVis/"

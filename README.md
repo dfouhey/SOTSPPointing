@@ -1,7 +1,5 @@
 # SOTSPPointing
-Code for using/loading updated Hinode SOT-SP Pointing.
-
-Written by David Fouhey to accompany results from:
+Code for using/loading updated Hinode SOT-SP Pointing, written by David Fouhey to accompany results from:
 
 ``Large-Scale Spatial Cross-Calibration of Hinode/SOT-SP and SDO/HMI'' 
 by David F. Fouhey, Richard E.L. Higgins, Spiro K. Antiochos, Graham
@@ -28,13 +26,25 @@ This provides an easy, minimal piece of code that will make an estimate of what
 the updated pointing should be at a particular date. The code has close to no
 dependencies and should work with nearly any version of python. If the pointing
 has a known correction (i.e., it was fit), that is used. Otherwise, it makes a 
-prediction that should be substantially better than the current pointing.
+prediction for a correction that should be substantially better than the current pointing.
+
+In both cases, the given output is a correction dx and dy that should be added to 
+XCEN and YCEN.
 
 For instance, here is the prediction at the time of writing:
 ```
 > python minimalCorrect.py 20230608_232500
 20230608_232500 23.438624 61.849458
 ```
+In this case, one should add 23.43 arcseconds to XCEN and 61.8 arcseconds to YCEN.
+
+If one fast forwards three months to outside Hinode eclipse season, the correction is
+different:
+```
+> python minimalCorrect.py 20230908_232500
+20230908_232500 29.974904 36.725413
+```
+Here, one should only add 29.97 arcseconds to XCEN and 36.72 arcseconds to YCEN.
 
 ## visualizePointingUpdate.py
 
@@ -72,10 +82,10 @@ datestr,XCENU,YCENU,XCENO,YCENO,DXCEN,DYCEN,totalTime,timeOfYear,timeOfDay,T_SPC
 
 The columns are:
 - (1) datestr: the nominal date of the Level2 Scan
-- (2) XCENU: the *u*pdated XCEN
-- (3) YCENU: the *u*pdated YCEN
-- (4) XCENO: the *o*riginal XCEN. Notably, this is re-computed from the X_COORDINATE because the XCEN in the Level 2 header isn't always right
-- (5) YCENO: the *o*riginal YCEN, computed like same as XCENO.
+- (2) XCENU: the **u**pdated XCEN
+- (3) YCENU: the **u**pdated YCEN
+- (4) XCENO: the **o**riginal XCEN. Notably, this is re-computed from the X_COORDINATE because the XCEN in the Level 2 header isn't always right
+- (5) YCENO: the **o**riginal YCEN, computed like same as XCENO.
 - (6) DXCEN: the change in XCEN (XCENU - XCENO)
 - (7) DYCEN: the change in YCEN (YCENU - YCENO)
 - (8) totalTime: the time since Hinode Launch (in years)
@@ -103,39 +113,44 @@ in four groups that are of varying interest. They are as follows:
 Each updated fits file is renamed identically to the old fits file. It has the
 same number of extensions. The only extensions that are filled with data are 
 the 38 and 39th, which were ``X_COORDINATE`` and ``Y_COORDINATE`` respectively. The remaining
-fits data is dummy data, which is put in so that the same extension numbers are the same.
+fits data is dummy data, which is put in so that the same extension numbers for X coordinates and Y Coordinates are the same.
 
 Here's an example loading a fits file (with some lines removed for brevity). The script 
 visualizePointingUpdate.py shows how to use the fits file.
 
 ```
 >>> import astropy.io.fits as fits
->>> X = fits.open("updateLevel2/Main/20141118_160506.fits")
+>>> import astropy.io.fits as fits
+>>> X = fits.open("dataSample/update/20160913_084504.fits")
 >>> X[0].header
 SIMPLE  =                    T / conforms to FITS standard
 BITPIX  =                    8 / array data type
 NAXIS   =                    0 / number of array dimensions
 EXTEND  =                    T
-XCEN    =   -334.5798034667969 / XCEN, updated
-YCEN    =   -287.9953308105469 / YCEN, updated
-XSCALE  =      0.2952414721443 / XSCALE with scale correction
+XCEN    =    238.6683197021484 / XCEN, updated
+YCEN    =   -34.68552017211914 / YCEN, updated
+XSCALE  =       0.295243459379 / XSCALE with scale correction
 YSCALE  =      0.3162061153349 / YSCALE with scale correction
+TSTART  = '2016-09-13T08:45:04.449'
+TEND    = '2016-09-13T09:17:24.660'
 ...
-T_SPCCD =             -32.5464 / L1 T_SPCCD: Temp at the CCD
-T_SPCEB =             -1.82974 / L1 T_SPCEB: Temp at the Camera Electronics Box
-L1DATE  = '2014-11-18T16:05:06.231' / Timestamp of data for Level 1 readings
-PNTDATE = '20141118_163600'    / Timestamp of SDO/HMI data providing pointing
-WARP00  =   0.5854536324953824 / Affine warp 0,0 entry; see comments
-WARP01  = 0.004877281726691565 / Affine warp 0,1 entry; see comments
-WARP02  =     1138.56124039986 / Affine warp 0,2 entry; see comments
-WARP10  = -0.00455391520662339 / Affine warp 1,0 entry; see comments
-WARP11  =   0.6270257951755208 / Affine warp 1,1 entry; see comments
-WARP12  =    1351.306456012081 / Affine warp 1,2 entry; see comments
-BNDMINX =                 1139 / Minimum X of warped region
-BNDMINY =                 1348 / Minimum Y of warped region
-BNDMAXX =                 1639 / Maximum X of warped region
-BNDMAXY =                 1606 / Maximum Y of warped region
-PACKDATE= '20230627'           / Date data was stored
+SOLAR_RA=        953.222365844
+WAVEUNIT=
+T_SPCCD =             -45.1226 / L1 T_SPCCD: Temp at the CCD
+T_SPCEB =             -7.04131 / L1 T_SPCEB: Temp at the Camera Electronics Box
+L1DATE  = '2016-09-13T08:45:04.449' / Timestamp of data for Level 1 readings
+PNTDATE = '20160913_090000'    / Timestamp of SDO/HMI data providing pointing
+WARP00  =   0.5854634755371871 / Affine warp 0,0 entry; see comments
+WARP01  = 0.003982504918422559 / Affine warp 0,1 entry; see comments
+WARP02  =    2377.973547790906 / Affine warp 0,2 entry; see comments
+WARP10  = -0.00371848763223202 / Affine warp 1,0 entry; see comments
+WARP11  =   0.6270321166791303 / Affine warp 1,1 entry; see comments
+WARP12  =    1818.135580985955 / Affine warp 1,2 entry; see comments
+BNDMINX =                 2378 / Minimum X of warped region
+BNDMINY =                 1817 / Minimum Y of warped region
+BNDMAXX =                 2675 / Maximum X of warped region
+BNDMAXY =                 2138 / Maximum Y of warped region
+PACKDATE= '20230629'           / Date data was stored
 COMMENT
 COMMENT Pointing has been updated from SDO/MDI following
 COMMENT Fouhey et al 2023 ApJS 264 49
@@ -143,21 +158,19 @@ COMMENT Important information on affine warp. The warp assumes:
 COMMENT 1) Hinode/SOT-SP has been expanded using the slit position
 COMMENT 2) X (left/right) is coordinate 1, Y (top/down) is coordinate 2
 COMMENT 3) SDO/HMI has been flipped/rotated exactly 180 degrees
-...
+HISTORY
 >>> X[38].data
-array([[-464.1023 , -463.807  , -463.51172, ..., -206.61899, -206.3237 , -206.02843],
-       [-464.09988, -463.80463, -463.50934, ..., -206.6166 , -206.32132, -206.02605],
-        ...,
-       [-463.13364, -462.83835, -462.54306, ..., -205.65031, -205.35504, -205.05977],
-       [-463.13123, -462.83597, -462.54068, ..., -205.64793, -205.35266, -205.05737]], dtype=float32)
-
+array([[162.73302, 163.02829, 163.32355, ..., 313.02502, 313.32028, 313.61554],
+       [162.73495, 163.03021, 163.32549, ..., 313.02695, 313.3222 , 313.6175 ],
+       ...,
+       [163.71913, 164.0144 , 164.30966, ..., 314.01114, 314.3064 , 314.60165],
+       [163.72105, 164.01633, 164.3116 , ..., 314.01306, 314.30832, 314.6036 ]], dtype=float32)
 >>> X[39].data
-array([[-351.38245, -351.38467, -351.3869 , ..., -353.3257 , -353.32794, -353.33017],
-       [-351.0662 , -351.06842, -351.07065, ..., -353.00946, -353.0117 , -353.01392],
-        ...,
-       [-222.98666, -222.98889, -222.99112, ..., -224.92966, -224.93188, -224.93411],
-       [-222.67043, -222.67265, -222.67488, ..., -224.61342, -224.61565, -224.61787]], dtype=float32)
-
+array([[-115.022995, -115.0248  , -115.0266  , ..., -115.94183 , -115.94364 , -115.94544 ],
+       [-114.706764, -114.708565, -114.71037 , ..., -115.6256  , -115.6274  , -115.62921 ],
+       ...,
+       [  46.256313,   46.25451 ,   46.252705, ...,   45.33734 , 45.335537,   45.33373 ],
+       [  46.572548,   46.570744,   46.56894 , ...,   45.653576, 45.651768,   45.649963]], dtype=float32)
 ```
 
 
